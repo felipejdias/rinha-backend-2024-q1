@@ -21,4 +21,6 @@ data class TransactionDomain(
     override fun toString(): String {
         return "Transaction(id=$id, type=$type, amount=$amount, description='$description', createdAt=$createdAt)"
     }
+
+    //TODO criar um método domainToBody
 }

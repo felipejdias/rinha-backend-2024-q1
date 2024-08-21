@@ -1,21 +1,20 @@
 -- Coloque scripts iniciais aqui
 CREATE TABLE client (
-                          id SERIAL PRIMARY KEY,
+                          client_id SERIAL PRIMARY KEY,
                           name VARCHAR(100) NOT NULL,
-                          limit INTEGER NOT NULL
+                          credit_limit INTEGER NOT NULL
 );
 
 CREATE TABLE transaction (
-                          id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+                          transaction_id UUID PRIMARY KEY,
                           type VARCHAR(1) NOT NULL,
                           amount INTEGER NOT NULL,
                           description VARCHAR(100) NOT NULL,
                           create_at DATE NOT NULL
 );
-
     DO $$
 BEGIN
-INSERT INTO clientes (name, limit)
+INSERT INTO clientes (name, credit_limit)
 VALUES
     ('o barato sai caro', 1000 * 100),
     ('zan corp ltda', 800 * 100),
