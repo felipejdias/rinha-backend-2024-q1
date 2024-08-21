@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
-class TransactionServiceDefault: TransactionService {
+class DefaultTransactionService: TransactionService {
     override fun create(context: Context): Transaction {
         TODO("Not yet implemented")
     }

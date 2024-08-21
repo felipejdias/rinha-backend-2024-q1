@@ -8,10 +8,10 @@ import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException
 import org.springframework.stereotype.Service
 
 @Service
-class ClientServiceDafault: ClientService {
+class DefaultClientService: ClientService {
 
     @Autowired
-    lateinit var repository: ClientRepository
+    private lateinit var repository: ClientRepository
 
     override fun getClientById(id: Long): Client {
         return repository.findById(id).let { throw NotFoundException() }
