@@ -1,13 +1,14 @@
-package com.felipejdias.rinhabackend2024q1.service
+package com.felipejdias.rinhabackend2024q1.service.impl
 
-import com.felipejdias.rinhabackend2024q1.model.Client
-import com.felipejdias.rinhabackend2024q1.repository.ClientRepository
+import com.felipejdias.rinhabackend2024q1.db.model.Client
+import com.felipejdias.rinhabackend2024q1.db.repository.ClientRepository
+import com.felipejdias.rinhabackend2024q1.service.ClientService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException
 import org.springframework.stereotype.Service
 
 @Service
-class ClientServiceDafaultImpl: ClientService {
+class ClientServiceDafault: ClientService {
 
     @Autowired
     lateinit var repository: ClientRepository

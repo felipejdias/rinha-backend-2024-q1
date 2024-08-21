@@ -1,12 +1,13 @@
-package com.felipejdias.rinhabackend2024q1.service
+package com.felipejdias.rinhabackend2024q1.service.impl
 
 import com.felipejdias.rinhabackend2024q1.context.Context
-import com.felipejdias.rinhabackend2024q1.model.Transaction
+import com.felipejdias.rinhabackend2024q1.db.model.Transaction
+import com.felipejdias.rinhabackend2024q1.service.TransactionService
 import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
-class TransactionServiceDefaultImpl: TransactionService {
+class TransactionServiceDefault: TransactionService {
     override fun create(context: Context): Transaction {
         TODO("Not yet implemented")
     }

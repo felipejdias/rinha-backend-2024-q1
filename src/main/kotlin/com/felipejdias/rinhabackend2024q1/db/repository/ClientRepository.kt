@@ -1,6 +1,6 @@
-package com.felipejdias.rinhabackend2024q1.repository
+package com.felipejdias.rinhabackend2024q1.db.repository
 
-import com.felipejdias.rinhabackend2024q1.model.Client
+import com.felipejdias.rinhabackend2024q1.db.model.Client
 import org.springframework.data.jpa.repository.JpaRepository
 
 

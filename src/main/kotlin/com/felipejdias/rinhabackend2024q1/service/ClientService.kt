@@ -1,6 +1,6 @@
 package com.felipejdias.rinhabackend2024q1.service
 
-import com.felipejdias.rinhabackend2024q1.model.Client
+import com.felipejdias.rinhabackend2024q1.db.model.Client
 import org.springframework.stereotype.Service
 
 @Service

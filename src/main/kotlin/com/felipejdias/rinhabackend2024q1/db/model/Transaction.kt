@@ -1,4 +1,4 @@
-package com.felipejdias.rinhabackend2024q1.model
+package com.felipejdias.rinhabackend2024q1.db.model
 
 import com.felipejdias.rinhabackend2024q1.domain.PaymentType
 import jakarta.persistence.Entity

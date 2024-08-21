@@ -1,4 +1,4 @@
-package com.felipejdias.rinhabackend2024q1.beans
+package com.felipejdias.rinhabackend2024q1.queue.beans
 
 import org.springframework.context.annotation.Bean
 import com.rabbitmq.client.*

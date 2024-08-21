@@ -1,4 +1,4 @@
-package com.felipejdias.rinhabackend2024q1.model
+package com.felipejdias.rinhabackend2024q1.db.model
 
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
