@@ -10,7 +10,7 @@ interface TransactionService {
 
     fun create(context: Context): Transaction
 
-    fun search(id: UUID): Transaction
+    fun search(id: UUID): Optional<Transaction>
 
-    fun getAllTransactionsByClient(id: Long): List<Transaction>
+    fun getAllTransactionsByClient(id: Long): Optional<List<Transaction>>
 }

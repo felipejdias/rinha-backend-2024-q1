@@ -4,28 +4,37 @@ import com.felipejdias.rinhabackend2024q1.context.Context
 import com.felipejdias.rinhabackend2024q1.context.requestToEntity
 import com.felipejdias.rinhabackend2024q1.db.model.Transaction
 import com.felipejdias.rinhabackend2024q1.db.repository.TransactionRepository
+import com.felipejdias.rinhabackend2024q1.queue.service.RabbitMQSender
 import com.felipejdias.rinhabackend2024q1.service.ClientService
 import com.felipejdias.rinhabackend2024q1.service.TransactionService
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.time.Instant
 import java.util.*
 
 @Service
 class DefaultTransactionService: TransactionService {
+    @Autowired
     private lateinit var clientService: ClientService
+
+    @Autowired
     private lateinit var repository: TransactionRepository
+
+
+    private val rabbitMQ =  RabbitMQSender()
 
     override fun create(context: Context): Transaction {
         val client = clientService.findById(context.clientId).orElseThrow { RuntimeException("client not found") }
-        //TODO trocar para chamar uma fila rabbitmq
-        return repository.save( context.requestToEntity(client = client, createdAt =  Instant.now()))
+        val transaction = context.requestToEntity(client = client, createdAt =  Instant.now())
+        rabbitMQ.send(transaction = transaction )
+        return transaction
     }
 
-    override fun search(id: UUID): Transaction {
-        TODO("Not yet implemented")
+    override fun search(id: UUID): Optional<Transaction> {
+      return repository.findById(id)
     }
 
-    override fun getAllTransactionsByClient(id: Long): List<Transaction> {
+    override fun getAllTransactionsByClient(id: Long):  Optional<List<Transaction>> {
         TODO("Not yet implemented")
     }
 }
