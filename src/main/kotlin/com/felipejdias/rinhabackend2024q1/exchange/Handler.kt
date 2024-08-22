@@ -32,13 +32,8 @@ class Handler {
     }
 
     fun clientRequestHandler(serverRequest: ServerRequest): Mono<ServerResponse> {
-        return  serverRequest.bodyToMono(String::class.java)
-            .flatMap {
-                ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
-                    .body(BodyInserters.fromValue(
-                        clientService.getClientById(serverRequest.pathVariable("clientId").toLong())
-                    ))
-        }.onErrorResume { ServerResponse.notFound().build() }
+        return  ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
+            .body(BodyInserters.fromValue(""))
 
     }
 
@@ -48,7 +43,12 @@ class Handler {
     }
 
     fun getClientHandler(serverRequest: ServerRequest): Mono<ServerResponse>{
-        return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
-            .body(BodyInserters.fromValue(""))
+        return serverRequest.bodyToMono(String::class.java)
+            .flatMap {
+                ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
+                    .body(BodyInserters.fromValue(
+                        clientService.getClientById(serverRequest.pathVariable("clientId").toLong())
+                    ))
+            }.onErrorResume { ServerResponse.notFound().build() }
     }
 }

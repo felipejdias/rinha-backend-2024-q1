@@ -24,6 +24,9 @@ extra["springCloudVersion"] = "2023.0.3"
 
 dependencies {
 
+    //kotlin
+    runtimeOnly("org.jetbrains.kotlin:kotlin-reflect")
+
     //spring
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
@@ -34,9 +37,6 @@ dependencies {
     //postgress
     implementation("org.postgresql:postgresql")
 
-
-    //test
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
 }
 
 dependencyManagement {
