@@ -14,7 +14,7 @@ CREATE TABLE transaction (
 );
     DO $$
 BEGIN
-INSERT INTO clientes (name, credit_limit)
+INSERT INTO client (name, credit_limit)
 VALUES
     ('o barato sai caro', 1000 * 100),
     ('zan corp ltda', 800 * 100),
