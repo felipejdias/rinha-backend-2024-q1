@@ -37,6 +37,10 @@ dependencies {
     //postgress
     implementation("org.postgresql:postgresql")
 
+    // https://mvnrepository.com/artifact/org.graalvm.nativeimage/svm
+    compileOnly("org.graalvm.nativeimage:svm:24.0.2")
+
+
 }
 
 dependencyManagement {
