@@ -4,7 +4,6 @@ import com.felipejdias.rinhabackend2024q1.context.Context
 import com.felipejdias.rinhabackend2024q1.context.requestToEntity
 import com.felipejdias.rinhabackend2024q1.db.model.Transaction
 import com.felipejdias.rinhabackend2024q1.db.repository.TransactionRepository
-import com.felipejdias.rinhabackend2024q1.queue.service.RabbitMQSender
 import com.felipejdias.rinhabackend2024q1.service.ClientService
 import com.felipejdias.rinhabackend2024q1.service.TransactionService
 import org.springframework.beans.factory.annotation.Autowired
@@ -21,12 +20,9 @@ class DefaultTransactionService: TransactionService {
     private lateinit var repository: TransactionRepository
 
 
-    private val rabbitMQ =  RabbitMQSender()
-
     override fun create(context: Context): Transaction {
         val client = clientService.findById(context.clientId).orElseThrow { RuntimeException("client not found") }
         val transaction = context.requestToEntity(client = client, createdAt =  Instant.now())
-        rabbitMQ.send(transaction = transaction )
         return transaction
     }
 
