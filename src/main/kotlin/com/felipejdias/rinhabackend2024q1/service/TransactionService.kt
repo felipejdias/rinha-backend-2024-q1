@@ -8,7 +8,7 @@ import java.util.*
 @Service
 interface TransactionService {
 
-    fun create(context: Context): Transaction
+    fun create(context: Context): Context
 
     fun search(id: UUID): Optional<Transaction>
 

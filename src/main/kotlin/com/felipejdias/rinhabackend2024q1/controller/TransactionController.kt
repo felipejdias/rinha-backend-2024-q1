@@ -1,8 +1,8 @@
 package com.felipejdias.rinhabackend2024q1.controller
 
 import com.felipejdias.rinhabackend2024q1.context.Context
-import com.felipejdias.rinhabackend2024q1.db.model.Transaction
 import com.felipejdias.rinhabackend2024q1.exchange.TransactionRequest
+import com.felipejdias.rinhabackend2024q1.exchange.TransactionResponse
 import com.felipejdias.rinhabackend2024q1.service.TransactionService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.GetMapping
@@ -22,8 +22,8 @@ class TransactionController {
     @PostMapping("/create/{clientId}")
     fun createTransaction(
         @PathVariable("clientId") clientId: Long,
-        @RequestBody transaction: TransactionRequest): Transaction {
-        return transactionService.create(Context(clientId = clientId, request = transaction))
+        @RequestBody transaction: TransactionRequest): TransactionResponse {
+        return transactionService.create(Context(clientId = clientId, request = transaction)).response!!
     }
 
     @GetMapping("/{id}")

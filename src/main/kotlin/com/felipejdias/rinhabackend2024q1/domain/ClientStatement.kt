@@ -1,21 +1,19 @@
 package com.felipejdias.rinhabackend2024q1.domain
 
-import java.time.Instant
+data class ExtratoBancario(
+    val saldo: Saldo,
+    val ultimasTransacoes: List<Transacao>
+)
 
-data class ClientStatement(
-    val balance: Balance,
-    val lastTransactions: List<TransactionDomain>
-    ){
-    //TODO criar um domainToBody
+data class Saldo(
+    val total: Int,
+    val dataExtrato: String,
+    val limite: Int
+)
 
-}
-
-data class Balance(
-    val total: Long,
-    val date: Instant,
-    val limit: Long,
-    ){
-
-    //TODO criar um método domainToBody
-
-}
+data class Transacao(
+    val valor: Int,
+    val tipo: String,
+    val descricao: String,
+    val realizadaEm: String
+)

@@ -9,6 +9,8 @@ COPY . /rinha-backend
 
 RUN microdnf install findutils
 
-RUN ./gradlew nativeCompile
+RUN ./gradlew build
 
 EXPOSE 8080
+
+ENTRYPOINT ["java", "-jar", "/rinha-backend/build/libs/rinha-backend-2024-q1-0.0.1-SNAPSHOT.jar"]

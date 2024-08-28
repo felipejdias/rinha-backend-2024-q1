@@ -2,11 +2,11 @@ package com.felipejdias.rinhabackend2024q1.service.impl
 
 import com.felipejdias.rinhabackend2024q1.db.model.Client
 import com.felipejdias.rinhabackend2024q1.db.repository.ClientRepository
+import com.felipejdias.rinhabackend2024q1.domain.ExtratoBancario
 import com.felipejdias.rinhabackend2024q1.service.ClientService
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException
 import org.springframework.stereotype.Service
-import java.util.Optional
+import java.util.*
 
 @Service
 class DefaultClientService: ClientService {
@@ -20,6 +20,10 @@ class DefaultClientService: ClientService {
 
     override fun createClient(client: Client): Client {
         return repository.save(client)
+    }
+
+    override fun getClientStatement(clientId: Long): ExtratoBancario {
+        TODO("Not yet implemented")
     }
 
 
