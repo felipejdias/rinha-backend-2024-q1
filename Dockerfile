@@ -12,5 +12,5 @@ RUN microdnf install findutils
 RUN ./gradlew build
 
 EXPOSE 8080
-
+#TODO ainda nao consegue subir dentro de um container docker  porém essa porcaria nao enxerga o banco
 ENTRYPOINT ["java", "-jar", "/rinha-backend/build/libs/rinha-backend-2024-q1-0.0.1-SNAPSHOT.jar"]

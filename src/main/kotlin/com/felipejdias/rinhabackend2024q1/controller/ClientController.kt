@@ -27,10 +27,15 @@ class ClientController {
     @PostMapping("/create")
     fun createClient(@RequestBody client: Client): Client {
        return clientService.createClient(client)
+    //TODO nao funciona ainda pois já foi pré
+    // inserido na base de dados  alguns registros precisa bolar um jeito do
+    // primeiro a ser inserido já começar no 7 pois na doc oficial fala q o 6 especificamente nao deve ser utilizado
+
     }
 
     @GetMapping("/{id}/extrato")
     fun getClientStatements(@PathVariable id: Long): Optional<ExtratoBancario> {
         TODO("Not yet implemented")
+        //TODO precisa ser implementada a lógica de obter o extrator
     }
 }

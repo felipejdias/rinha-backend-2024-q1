@@ -1,6 +1,7 @@
 package com.felipejdias.rinhabackend2024q1.controller
 
 import com.felipejdias.rinhabackend2024q1.context.Context
+import com.felipejdias.rinhabackend2024q1.db.model.Transaction
 import com.felipejdias.rinhabackend2024q1.exchange.TransactionRequest
 import com.felipejdias.rinhabackend2024q1.exchange.TransactionResponse
 import com.felipejdias.rinhabackend2024q1.service.TransactionService
@@ -27,8 +28,8 @@ class TransactionController {
     }
 
     @GetMapping("/{id}")
-    fun getTransactionById(@PathVariable("id") id: Long){
-
+    fun getTransactionById(@PathVariable("id") id: Long): Transaction{
+        TODO("Not yet implemented")
     }
 
 
