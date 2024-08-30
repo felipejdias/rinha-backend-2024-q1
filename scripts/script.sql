@@ -1,40 +1,41 @@
--- Coloque scripts iniciais aqui
-CREATE TABLE client (
-                        client_id SERIAL PRIMARY KEY,
-                        name VARCHAR(100) NOT NULL,
-                        credit_limit INTEGER NOT NULL,
-                        balance INTEGER DEFAULT 0
+create table if not exists client
+(
+    client_id    bigint not null
+        primary key,
+    balance      bigint,
+    credit_limit bigint,
+    name         varchar(255)
 );
 
-CREATE TABLE transaction (
-                             transaction_id VARCHAR(36) PRIMARY KEY,
-                             type VARCHAR(1) NOT NULL,
-                             amount INTEGER NOT NULL,
-                             description VARCHAR(100) NOT NULL,
-                             create_at DATE NOT NULL,
-                             client_id INTEGER NOT NULL
+create table if not exists transactions
+(
+    id          uuid         not null
+        primary key,
+    amount      bigint       not null,
+    created_at  timestamp(6) with time zone,
+    description varchar(255) not null,
+    type        varchar(255)
+        constraint transactions_type_check
+            check ((type)::text = ANY ((ARRAY ['CREDITO'::character varying, 'DEBITO'::character varying])::text[])),
+    client_id   bigint       not null
+        constraint fk7y7yu8a8upa3ct3qwfwonbn9q
+            references client
 );
-
--- Adicionando a Foreign Key
-ALTER TABLE transaction
-    ADD CONSTRAINT fk_transaction_client
-        FOREIGN KEY (client_id)
-            REFERENCES client(client_id);
-
--- Criando a sequence
-CREATE SEQUENCE client_id_seq;
-
--- Alterando a tabela client para usar a sequence
-ALTER TABLE client
-ALTER COLUMN client_id SET DEFAULT nextval('client_id_seq');
 
     DO $$
 BEGIN
-INSERT INTO client (name, credit_limit)
+INSERT INTO client (client_id, name, credit_limit, balance)
 VALUES
-    ('o barato sai caro', 1000 * 100),
-    ('zan corp ltda', 800 * 100),
-    ('les cruders', 10000 * 100),
-    ('padaria joia de cocaia', 100000 * 100),
-    ('kid mais', 5000 * 100);
-END; $$
+    (1, 'o barato sai caro', 1000 * 100,0 ),
+    (2, 'zan corp ltda', 800 * 100,0 ),
+    (3, 'les cruders', 10000 * 100, 0 ),
+    (4, 'padaria joia de cocaia', 100000 * 100, 0),
+    (5, 'kid mais', 5000 * 100, 0);
+END; $$;
+
+create sequence client_id_seq
+    start with 7;
+
+-- Alterando a tabela client para usar a sequence
+ALTER TABLE client
+    ALTER COLUMN client_id SET DEFAULT nextval('client_id_seq');
