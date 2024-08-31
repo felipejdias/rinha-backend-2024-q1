@@ -25,13 +25,13 @@ class DefaultStatementService: StatementService {
     private lateinit var clientService: ClientService
 
     override fun getClientStatement(clientId: Long): ExtratoBancario {
-        val client  = clientService.findById(clientId).orElseThrow { HttpClientErrorException(NOT_FOUND, "ClientId not found") }
+        val client  = clientService.findById(clientId)
         val lastTransactions = transactionService.getAllTransactionsByClient(clientId)
             .orElseThrow { HttpClientErrorException(NOT_FOUND, "Transactions not found") }
         val actualBalance= transactionService.calculateNewClientBalance(client)
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
         val formattedDateTime = formatter.format( Instant.now().atZone(ZoneId.systemDefault()))
-        val saldo = Saldo(total = actualBalance, dataExtrato = formattedDateTime, limite = client.limit)
+        val saldo = Saldo(total = actualBalance, data_extrato = formattedDateTime, limite = client.limit)
 
         return ExtratoBancario(saldo = saldo,  ultimas_transacoes =  lastTransactions.toTransacoes())
 

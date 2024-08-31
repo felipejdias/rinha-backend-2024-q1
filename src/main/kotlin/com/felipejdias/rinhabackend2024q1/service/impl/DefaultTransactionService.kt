@@ -6,14 +6,12 @@ import com.felipejdias.rinhabackend2024q1.db.model.Client
 import com.felipejdias.rinhabackend2024q1.db.model.Transaction
 import com.felipejdias.rinhabackend2024q1.db.repository.TransactionRepository
 import com.felipejdias.rinhabackend2024q1.domain.PaymentType
+import com.felipejdias.rinhabackend2024q1.exception.ClientLimitExceededException
 import com.felipejdias.rinhabackend2024q1.exchange.TransactionResponse
 import com.felipejdias.rinhabackend2024q1.service.ClientService
 import com.felipejdias.rinhabackend2024q1.service.TransactionService
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.http.HttpStatus.NOT_FOUND
-import org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY
 import org.springframework.stereotype.Service
-import org.springframework.web.client.HttpClientErrorException
 import java.time.Instant
 import java.util.*
 
@@ -29,7 +27,6 @@ class DefaultTransactionService: TransactionService {
 
     override fun create(context: Context): Context {
         val client = clientService.findById(context.clientId)
-            .orElseThrow { HttpClientErrorException(NOT_FOUND, "ClientId not found") }  //TODO aqui esse erro precisa ser respondido no body e o status code
 
         val transaction = context.requestToEntity(client = client)
         val clientUpdated = registerNewTransaction(client, transaction)
@@ -51,7 +48,7 @@ class DefaultTransactionService: TransactionService {
         val actualBalance = calculateNewClientBalance(client)
         val clientLimit = 0 - client.limit
         if (transaction.type == PaymentType.DEBITO && actualBalance.minus(transaction.amount) < clientLimit ) {
-            throw  HttpClientErrorException(UNPROCESSABLE_ENTITY, "Client limit exceeded") //TODO aqui esse erro precisa ser respondido no body e o status code
+            throw  ClientLimitExceededException()
         }else if(transaction.type == PaymentType.DEBITO){
             client.balance = actualBalance.minus(transaction.amount)
         }else if(transaction.type == PaymentType.CREDITO){

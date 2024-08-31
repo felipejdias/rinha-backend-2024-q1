@@ -11,7 +11,7 @@ data class ExtratoBancario(
 
 data class Saldo(
     val total: Long,
-    val dataExtrato: String,
+    val data_extrato: String,
     val limite: Long
 )
 
@@ -19,5 +19,5 @@ data class Transacao(
     val valor: Long,
     val tipo: String,
     val descricao: String,
-    val realizadaEm: String
+    val realizado_em: String
 )

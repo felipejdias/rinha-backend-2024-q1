@@ -1,16 +1,20 @@
+FROM gradle:jdk21-alpine AS build
+
+RUN mkdir -p /usr/src/rinha-backend
+
+COPY . /usr/src/rinha-backend
+
+WORKDIR /usr/src/rinha-backend
+
+RUN gradle build
+
 # Use uma imagem base com GraalVM e Java 21 (ajuste a tag conforme necessário)
 FROM container-registry.oracle.com/graalvm/native-image:21
 
-# copia arquivos
+COPY --from=build /usr/src/rinha-backend/build/libs/*.jar /rinha-backend/app.jar
+
 WORKDIR /rinha-backend
-
-# Copie todos os arquivos
-COPY . /rinha-backend
-
-RUN microdnf install findutils
-
-RUN ./gradlew build
 
 EXPOSE 8080
 #TODO ainda nao consegue subir dentro de um container docker  porém essa porcaria nao enxerga o banco
-ENTRYPOINT ["java", "-jar", "/rinha-backend/build/libs/rinha-backend-2024-q1-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-jar", "/rinha-backend/app.jar"]

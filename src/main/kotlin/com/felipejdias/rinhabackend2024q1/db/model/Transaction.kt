@@ -45,7 +45,7 @@ fun Transaction.toTransacao(): Transacao {
         valor = amount,
         tipo = type.value,
         descricao = description,
-        realizadaEm = createdAt.toString(),
+        realizado_em = createdAt.toString(),
     )
 }
 

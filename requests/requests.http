@@ -1,10 +1,10 @@
 ### Cria transacao
-POST http://{{hostname}}:{{port}}/clientes/2/transacoes
+POST http://{{hostname}}:{{port}}/clientes/1/transacoes
 Content-type:  application/json
 
 {
   "valor": 99998,
-  "tipo" : "c",
+  "tipo" : "d",
   "descricao" : "descricao"
 }
 
@@ -13,7 +13,7 @@ GET http://{{hostname}}:{{port}}/clientes/4/extrato
 Content-type:  application/json
 
 ### Consulta cliente
-GET http://{{hostname}}:{{port}}/clientes/1
+GET http://{{hostname}}:{{port}}/clientes/6
 
 ### cria cliente
 POST http://{{hostname}}:{{port}}/clientes
