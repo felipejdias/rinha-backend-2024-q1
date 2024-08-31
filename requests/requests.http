@@ -1,0 +1,27 @@
+### Cria transacao
+POST http://{{hostname}}:{{port}}/clientes/2/transacoes
+Content-type:  application/json
+
+{
+  "valor": 99998,
+  "tipo" : "c",
+  "descricao" : "descricao"
+}
+
+### consulta extrator
+GET http://{{hostname}}:{{port}}/clientes/4/extrato
+Content-type:  application/json
+
+### Consulta cliente
+GET http://{{hostname}}:{{port}}/clientes/1
+
+### cria cliente
+POST http://{{hostname}}:{{port}}/clientes
+Content-Type: application/json
+
+{
+    "name": "jaconis",
+    "limit": 10000
+}
+
+###
