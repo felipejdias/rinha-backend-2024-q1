@@ -31,7 +31,7 @@ data class Transaction(
     @Column(nullable = false)
     val description: String,
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id", nullable = false)
     val client: Client,
 

@@ -4,7 +4,7 @@ Content-type:  application/json
 
 {
   "valor": 100000,
-  "tipo" : "e",
+  "tipo" : "c",
   "descricao" : "descricao"
 }
 
@@ -13,7 +13,7 @@ GET http://{{hostname}}:{{port}}/clientes/1/extrato
 Content-type:  application/json
 
 ### Consulta cliente
-GET http://{{hostname}}:{{port}}/clientes/1
+GET http://{{hostname}}:{{port}}/clientes/3
 
 ### cria cliente
 POST http://{{hostname}}:{{port}}/clientes

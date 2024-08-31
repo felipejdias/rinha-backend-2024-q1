@@ -3,6 +3,7 @@ package com.felipejdias.rinhabackend2024q1.db.model
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
+import org.springframework.data.annotation.Version
 
 @Entity
 data class Client(
@@ -13,7 +14,9 @@ data class Client(
     @Column(name = "credit_limit")
     var limit: Long,
     @Column(name = "balance")
-    var balance: Long = 0){
+    var balance: Long = 0,
+    @Version
+    var version: Long){
     override fun toString(): String {
         return "Client(id=$id, name='$name', limit=$limit, balance=$balance)"
     }
