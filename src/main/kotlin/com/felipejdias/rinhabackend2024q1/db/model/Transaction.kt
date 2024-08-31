@@ -1,6 +1,7 @@
 package com.felipejdias.rinhabackend2024q1.db.model
 
 import com.felipejdias.rinhabackend2024q1.domain.PaymentType
+import com.felipejdias.rinhabackend2024q1.domain.Transacao
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
@@ -34,6 +35,20 @@ data class Transaction(
     @JoinColumn(name = "client_id", nullable = false)
     val client: Client,
 
-    @Column(name = "created_at", updatable = false, insertable = false)
-    val createdAt: Instant = Instant.now()
+    @Column(name = "created_at")
+    val createdAt: Instant
 )
+
+
+fun Transaction.toTransacao(): Transacao {
+    return Transacao(
+        valor = amount,
+        tipo = type.value,
+        descricao = description,
+        realizadaEm = createdAt.toString(),
+    )
+}
+
+fun List<Transaction>.toTransacoes(): List<Transacao> {
+    return this.map { it.toTransacao() }
+}

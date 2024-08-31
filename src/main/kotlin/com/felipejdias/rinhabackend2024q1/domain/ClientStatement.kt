@@ -6,17 +6,17 @@ package com.felipejdias.rinhabackend2024q1.domain
 // pois da forma que está ficará de acordo com o response descrito na rinha https://github.com/zanfranceschi/rinha-de-backend-2024-q1
 data class ExtratoBancario(
     val saldo: Saldo,
-    val ultimasTransacoes: List<Transacao>
+    val ultimas_transacoes: List<Transacao>
 )
 
 data class Saldo(
-    val total: Int,
+    val total: Long,
     val dataExtrato: String,
-    val limite: Int
+    val limite: Long
 )
 
 data class Transacao(
-    val valor: Int,
+    val valor: Long,
     val tipo: String,
     val descricao: String,
     val realizadaEm: String

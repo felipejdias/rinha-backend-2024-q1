@@ -5,6 +5,7 @@ import com.felipejdias.rinhabackend2024q1.db.model.Transaction
 import com.felipejdias.rinhabackend2024q1.domain.PaymentType
 import com.felipejdias.rinhabackend2024q1.exchange.TransactionRequest
 import com.felipejdias.rinhabackend2024q1.exchange.TransactionResponse
+import java.time.Instant
 
 class Context(
     var request: TransactionRequest,
@@ -17,4 +18,5 @@ class Context(
              type = PaymentType.values().find { it.value == request.tipo }!!,
              amount = this.request.valor,
              description = this.request.descricao,
-             client = client)
+             client = client,
+             createdAt = Instant.now())
