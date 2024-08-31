@@ -60,8 +60,9 @@ class DefaultTransactionService: TransactionService {
     }
 
     override fun calculateNewClientBalance(client: Client): Long{
-        val totalDebit = repository.getSumTotalTransactionAmountByType(PaymentType.DEBITO.name, clientId = client.id).orElse(0)
-        val totalCredit =  repository.getSumTotalTransactionAmountByType(PaymentType.CREDITO.name, clientId = client.id).orElse(0)
+        val transactionSummary  = repository.getTransactionSummariesByClientId( clientId = client.id)
+        val totalCredit = transactionSummary.filterKeys { it == "totalCredit" }.values.filterNotNull().sum()
+        val totalDebit = transactionSummary.filterKeys { it == "totalDebit" }.values.filterNotNull().sum()
         return totalCredit - totalDebit
 
     }

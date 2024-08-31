@@ -39,3 +39,7 @@ create sequence client_id_seq
 -- Alterando a tabela client para usar a sequence
 ALTER TABLE client
     ALTER COLUMN client_id SET DEFAULT nextval('client_id_seq');
+
+CREATE INDEX idx_transactions_client_id ON transactions (client_id);
+CREATE INDEX idx_transactions_client_id_created_at ON transactions (client_id, created_at DESC);
+CREATE INDEX idx_transactions_client_id_payment_type ON transactions (client_id, type);

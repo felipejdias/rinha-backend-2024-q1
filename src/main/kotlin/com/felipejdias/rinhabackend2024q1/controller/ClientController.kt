@@ -3,6 +3,7 @@ package com.felipejdias.rinhabackend2024q1.controller
 import com.felipejdias.rinhabackend2024q1.context.Context
 import com.felipejdias.rinhabackend2024q1.db.model.Client
 import com.felipejdias.rinhabackend2024q1.domain.ExtratoBancario
+import com.felipejdias.rinhabackend2024q1.exception.InvalidParameterException
 import com.felipejdias.rinhabackend2024q1.exchange.TransactionRequest
 import com.felipejdias.rinhabackend2024q1.exchange.TransactionResponse
 import com.felipejdias.rinhabackend2024q1.service.ClientService
@@ -54,6 +55,12 @@ class ClientController {
         @PathVariable("clientId") clientId: Long,
         @RequestBody transaction: TransactionRequest
     ): TransactionResponse {
+        validateTransactionRequest(transaction)
         return transactionService.create(Context(clientId = clientId, request = transaction)).response!!
+    }
+
+    private fun validateTransactionRequest(transaction: TransactionRequest){
+        if (transaction.tipo != "c" && transaction.tipo != "d") throw InvalidParameterException()
+        if (transaction.descricao.length !in 1..10) throw InvalidParameterException()
     }
 }

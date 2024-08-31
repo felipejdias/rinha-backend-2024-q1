@@ -3,17 +3,17 @@ POST http://{{hostname}}:{{port}}/clientes/1/transacoes
 Content-type:  application/json
 
 {
-  "valor": 99998,
-  "tipo" : "d",
+  "valor": 100000,
+  "tipo" : "e",
   "descricao" : "descricao"
 }
 
 ### consulta extrator
-GET http://{{hostname}}:{{port}}/clientes/4/extrato
+GET http://{{hostname}}:{{port}}/clientes/1/extrato
 Content-type:  application/json
 
 ### Consulta cliente
-GET http://{{hostname}}:{{port}}/clientes/6
+GET http://{{hostname}}:{{port}}/clientes/1
 
 ### cria cliente
 POST http://{{hostname}}:{{port}}/clientes
