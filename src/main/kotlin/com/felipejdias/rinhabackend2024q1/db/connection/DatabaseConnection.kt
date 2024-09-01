@@ -7,7 +7,7 @@ import java.sql.SQLException
 class DatabaseConnection {
     companion object {
         private val hikariConfig: HikariConfig = HikariConfig().apply {
-            jdbcUrl = "jdbc:postgresql://localhost:5432/rinha-backend"
+            jdbcUrl = "jdbc:postgresql://db:5432/rinha-backend"
             username = "admin"
             password = "123"
             driverClassName = "org.postgresql.Driver"
