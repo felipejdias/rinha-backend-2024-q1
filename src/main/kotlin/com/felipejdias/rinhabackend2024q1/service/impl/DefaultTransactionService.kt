@@ -45,7 +45,7 @@ class DefaultTransactionService: TransactionService {
     }
 
     private fun registerNewTransaction(client: Client, transaction: Transaction):Client {
-        val actualBalance = calculateNewClientBalance(client)
+        val actualBalance = client.balance
         val clientLimit = 0 - client.limit
         if (transaction.type == PaymentType.DEBITO && actualBalance.minus(transaction.amount) < clientLimit ) {
             throw  ClientLimitExceededException()

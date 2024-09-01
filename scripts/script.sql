@@ -1,45 +1,41 @@
-create table if not exists client
+CREATE  UNLOGGED  TABLE IF NOT EXISTS CLIENT
 (
-    client_id    bigint not null
-        primary key,
-    balance      bigint,
-    credit_limit bigint,
-    name         varchar(255)
+    CLIENT_ID    BIGINT NOT NULL PRIMARY KEY,
+    BALANCE      BIGINT,
+    CREDIT_LIMIT BIGINT,
+    NAME         VARCHAR(255)
 );
 
-create table if not exists transactions
+CREATE UNLOGGED TABLE IF NOT EXISTS TRANSACTIONS
 (
-    id          uuid         not null
-        primary key,
-    amount      bigint       not null,
-    created_at  timestamp(6) with time zone,
-    description varchar(255) not null,
-    type        varchar(255)
-        constraint transactions_type_check
-            check ((type)::text = ANY ((ARRAY ['CREDITO'::character varying, 'DEBITO'::character varying])::text[])),
-    client_id   bigint       not null
-        constraint fk7y7yu8a8upa3ct3qwfwonbn9q
-            references client
+    ID          UUID         NOT NULL PRIMARY KEY,
+    AMOUNT      BIGINT       NOT NULL,
+    CREATED_AT  TIMESTAMP(6) WITH TIME ZONE,
+    DESCRIPTION VARCHAR(255) NOT NULL,
+    TYPE        VARCHAR(255),
+    CLIENT_ID   BIGINT       NOT NULL
 );
 
-    DO $$
-BEGIN
-INSERT INTO client (client_id, name, credit_limit, balance)
-VALUES
-    (1, 'o barato sai caro', 1000 * 100,0 ),
-    (2, 'zan corp ltda', 800 * 100,0 ),
-    (3, 'les cruders', 10000 * 100, 0 ),
-    (4, 'padaria joia de cocaia', 100000 * 100, 0),
-    (5, 'kid mais', 5000 * 100, 0);
-END; $$;
+DO
+$$
+    BEGIN
+        INSERT INTO CLIENT (CLIENT_ID, NAME, CREDIT_LIMIT, BALANCE)
+        VALUES (1, 'O BARATO SAI CARO', 1000 * 100, 0),
+               (2, 'ZAN CORP LTDA', 800 * 100, 0),
+               (3, 'LES CRUDERS', 10000 * 100, 0),
+               (4, 'PADARIA JOIA DE COCAIA', 100000 * 100, 0),
+               (5, 'KID MAIS', 5000 * 100, 0);
+    END;
+$$;
 
-create sequence client_id_seq
-    start with 7;
+CREATE SEQUENCE CLIENT_ID_SEQ
+    START WITH 7;
 
--- Alterando a tabela client para usar a sequence
-ALTER TABLE client
-    ALTER COLUMN client_id SET DEFAULT nextval('client_id_seq');
+-- ALTERANDO A TABELA CLIENT PARA USAR A SEQUENCE
+ALTER TABLE CLIENT
+    ALTER COLUMN CLIENT_ID SET DEFAULT NEXTVAL('CLIENT_ID_SEQ');
 
-CREATE INDEX idx_transactions_client_id ON transactions (client_id);
-CREATE INDEX idx_transactions_client_id_created_at ON transactions (client_id, created_at DESC);
-CREATE INDEX idx_transactions_client_id_payment_type ON transactions (client_id, type);
+CREATE INDEX IDX_TRANSACTIONS_CLIENT_ID ON TRANSACTIONS (CLIENT_ID);
+CREATE INDEX IDX_TRANSACTIONS_CLIENT_ID_CREATED_AT ON TRANSACTIONS (CLIENT_ID, CREATED_AT DESC);
+CREATE INDEX IDX_TRANSACTIONS_CLIENT_ID_PAYMENT_TYPE ON TRANSACTIONS (CLIENT_ID, TYPE);
+
