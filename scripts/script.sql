@@ -39,3 +39,54 @@ CREATE INDEX IDX_TRANSACTIONS_CLIENT_ID ON TRANSACTIONS (CLIENT_ID);
 CREATE INDEX IDX_TRANSACTIONS_CLIENT_ID_CREATED_AT ON TRANSACTIONS (CLIENT_ID, CREATED_AT DESC);
 CREATE INDEX IDX_TRANSACTIONS_CLIENT_ID_PAYMENT_TYPE ON TRANSACTIONS (CLIENT_ID, TYPE);
 
+CREATE OR REPLACE FUNCTION register_transaction(
+    clientIdParam int,
+    typeParam varchar(1),
+    amountParam bigint,
+    descriptionParam varchar(255)
+)
+    RETURNS TABLE
+            (
+                saldoRetorno bigint,
+                limiteRetorno bigint
+            )
+AS
+$$
+DECLARE
+    clientRow CLIENT%rowtype;
+    newBalance bigint;
+    affectedRows int;
+BEGIN
+    -- Bloquear a linha do cliente para atualização
+    PERFORM * FROM clientRow WHERE CLIENT_ID = clientIdParam FOR UPDATE;
+
+    -- Determinar se a transação é débito ou crédito
+    IF typeParam = 'd' THEN
+        newBalance := amountParam * -1;
+    ELSE
+        newBalance := amountParam;
+    END IF;
+
+    -- Atualizar o saldo do cliente
+    UPDATE clientRow
+    SET BALANCE = BALANCE + newBalance
+    WHERE CLIENT_ID = clientIdParam
+      AND (newBalance > 0 OR CREDIT_LIMIT * -1 <= BALANCE + newBalance)
+    RETURNING * INTO clientRow;
+
+    -- Verificar se a atualização afetou alguma linha
+    GET DIAGNOSTICS affectedRows = ROW_COUNT;
+
+    IF affectedRows = 0 THEN
+        RAISE EXCEPTION 'Cliente nao possui limite';
+    END IF;
+
+    -- Inserir registro da transação
+    INSERT INTO TRANSACTIONS (CLIENT_ID, AMOUNT, TYPE, DESCRIPTION, CREATED_AT)
+    VALUES (clientIdParam, amountParam, typeParam, descriptionParam, current_timestamp);
+
+    -- Retornar o novo saldo e limite
+    RETURN QUERY SELECT clientRow.BALANCE, clientRow.CREDIT_LIMIT;
+END;
+$$
+    LANGUAGE plpgsql;

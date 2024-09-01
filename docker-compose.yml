@@ -41,8 +41,6 @@ services:
       - "8082:8080"
     networks:
       - rede-backend
-
- #TODO como ainda nao gerou uma imagem em um repo publico o nginx ainda não está configurado
   nginx:
     image: nginx:latest
     container_name: 'nginx'
@@ -74,6 +72,8 @@ services:
       - "5432:5432"
     volumes:
       - ./scripts/script.sql:/docker-entrypoint-initdb.d/script.sql
+      - ./config/postgres.conf:/docker-entrypoint-initdb.d/postgres.conf
+    command: postgres -c config_file=/docker-entrypoint-initdb.d/postgres.conf
     deploy:
       resources:
         limits:
