@@ -7,11 +7,6 @@ services:
     hostname: api01
     environment:
       - DB_HOSTNAME=db
-      - DB_POOL_SIZE=10
-      - WARMUP_HOST=http://api01:8080
-      - WARMUP_ENABLED=true
-      - WARMUP_REQUESTS=10
-
     # Não é necessário expor qualquer porta além da porta do load balancer,
     # mas é comum as pessoas o fazerem para testarem suas APIs e conectarem
     # ao banco de dados na fase de desenvolvimento.
@@ -22,8 +17,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "0.6"
-          memory: "200MB"
+          cpus: "0.525"
+          memory: "210MB"
     networks:
       - rede-backend
 
@@ -33,16 +28,10 @@ services:
     hostname: api02
     environment:
       - DB_HOSTNAME=db
-      - DB_POOL_SIZE=10
-      - WARMUP_HOST=http://api02:8080
-      - WARMUP_ENABLED=true
-      - WARMUP_REQUESTS=10
     ports:
       - "8082:8080"
     networks:
       - rede-backend
-
- #TODO como ainda nao gerou uma imagem em um repo publico o nginx ainda não está configurado
   nginx:
     image: nginx:latest
     container_name: 'nginx'
@@ -57,7 +46,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "0.17"
+          cpus: "0.05"
           memory: "10MB"
     networks:
      - rede-backend
@@ -74,11 +63,12 @@ services:
       - "5432:5432"
     volumes:
       - ./scripts/script.sql:/docker-entrypoint-initdb.d/script.sql
+    command: "postgres -c synchronous_commit=0 -c full_page_writes=0"
     deploy:
       resources:
         limits:
-          cpus: "0.13"
-          memory: "140MB"
+          cpus: "0.4"
+          memory: "120MB"
     networks:
       - rede-backend
 

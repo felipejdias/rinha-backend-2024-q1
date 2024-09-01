@@ -1,22 +1,18 @@
 package com.felipejdias.rinhabackend2024q1.context
 
-import com.felipejdias.rinhabackend2024q1.db.model.Client
-import com.felipejdias.rinhabackend2024q1.db.model.Transaction
-import com.felipejdias.rinhabackend2024q1.domain.PaymentType
+import com.felipejdias.rinhabackend2024q1.db.model.TransactionEntity
 import com.felipejdias.rinhabackend2024q1.exchange.TransactionRequest
-import com.felipejdias.rinhabackend2024q1.exchange.TransactionResponse
 import java.time.Instant
 
 class Context(
     var request: TransactionRequest,
-    var clientId: Long = 0,
-    var response: TransactionResponse? = null,
+    var clientId: Long = 0
                 )
 
-    fun Context.requestToEntity(client: Client): Transaction =
-         Transaction(
-             type = PaymentType.values().find { it.value == request.tipo }!!,
+    fun Context.requestToEntity(clientId: Long): TransactionEntity =
+        TransactionEntity(
+             type = this.request.tipo,
              amount = this.request.valor,
              description = this.request.descricao,
-             client = client,
-             createdAt = Instant.now())
+             clientId = clientId,
+             createdAt = Instant.now().toString())

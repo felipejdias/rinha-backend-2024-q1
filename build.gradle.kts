@@ -28,11 +28,10 @@ dependencies {
     runtimeOnly("org.jetbrains.kotlin:kotlin-reflect")
 
     //spring
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-web")
 
-    //rabbitmq
-    implementation("com.rabbitmq:amqp-client")
+    implementation("com.zaxxer:HikariCP:5.1.0")
+
 
     //postgress
     implementation("org.postgresql:postgresql")
