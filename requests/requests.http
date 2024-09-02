@@ -4,7 +4,7 @@ Content-type:  application/json
 
 {
   "valor": 1,
-  "tipo" : "d",
+  "tipo" : "c",
   "descricao" : "descricao"
 }
 

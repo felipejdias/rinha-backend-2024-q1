@@ -6,7 +6,7 @@ import com.felipejdias.rinhabackend2024q1.exception.ClientLimitExceededException
 import com.felipejdias.rinhabackend2024q1.exception.ClientNotFoundException
 import com.felipejdias.rinhabackend2024q1.exception.InvalidParameterException
 import com.felipejdias.rinhabackend2024q1.exchange.TransactionRequest
-import com.felipejdias.rinhabackend2024q1.exchange.TransactionResponse
+import com.felipejdias.rinhabackend2024q1.exchange.ClientResponse
 import com.felipejdias.rinhabackend2024q1.service.StatementService
 import com.felipejdias.rinhabackend2024q1.service.TransactionService
 import org.postgresql.util.PSQLException
@@ -43,7 +43,7 @@ class ClientController {
     fun createTransaction(
         @PathVariable("clientId") clientId: Long,
         @RequestBody transaction: TransactionRequest
-    ): TransactionResponse {
+    ): ClientResponse {
         validateTransactionRequest(transaction)
         return try {
             transactionService.create(Context(clientId = clientId, request = transaction))

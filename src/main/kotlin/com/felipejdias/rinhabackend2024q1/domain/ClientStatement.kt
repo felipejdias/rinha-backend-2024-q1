@@ -24,14 +24,32 @@ data class Balance(
 
 data class TransactionResponse(
     @JsonProperty("valor")
-    val amount: Long = 0,
+    val amount: Long,
 
     @JsonProperty("tipo")
-    val type: String = "",
+    val type: String,
 
     @JsonProperty("descricao")
-    val description: String = "",
+    val description: String,
 
     @JsonProperty("realizado_em")
-    val createdAt: String = ""
-)
+    val createdAt: String
+){
+    class Builder {
+        private lateinit var type: String
+        private var amount: Long = 0
+        private lateinit var description: String
+        private var createdAt: String = ""
+        fun type(type: String) = apply { this.type = type }
+        fun amount(amount: Long) = apply { this.amount = amount }
+        fun description(description: String) = apply { this.description = description }
+        fun createdAt(createdAt: String) = apply { this.createdAt = createdAt }
+
+        fun build() = TransactionResponse(
+            type = type,
+            amount = amount,
+            description = description,
+            createdAt = createdAt
+        )
+    }
+}

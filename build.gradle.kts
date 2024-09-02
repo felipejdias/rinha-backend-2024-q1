@@ -33,11 +33,12 @@ dependencies {
     implementation("com.zaxxer:HikariCP:5.1.0")
 
 
+
     //postgress
-    implementation("org.postgresql:postgresql")
+    implementation("org.postgresql:postgresql:42.5.0")
 
     // https://mvnrepository.com/artifact/org.graalvm.nativeimage/svm
-    compileOnly("org.graalvm.nativeimage:svm:24.0.2")
+    //compileOnly("org.graalvm.nativeimage:svm:24.0.2")
 
 
 }
@@ -50,10 +51,14 @@ dependencyManagement {
 
 kotlin {
     compilerOptions {
-        freeCompilerArgs.addAll("-Xjsr305=strict")
+        freeCompilerArgs.addAll("-Xjsr305=strict", "-opt-in=kotlin.RequiresOptIn", "-Xinline-classes")
     }
 }
 
 tasks.withType<Test> {
     useJUnitPlatform()
+    testLogging {
+        events("passed", "skipped", "failed")
+    }
+    outputs.cacheIf { true }
 }
