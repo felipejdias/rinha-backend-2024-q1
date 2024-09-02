@@ -1,69 +1,56 @@
 package com.felipejdias.rinhabackend2024q1.service.impl
 
 import com.felipejdias.rinhabackend2024q1.context.Context
-import com.felipejdias.rinhabackend2024q1.context.requestToEntity
 import com.felipejdias.rinhabackend2024q1.db.model.Client
 import com.felipejdias.rinhabackend2024q1.db.model.Transaction
+import com.felipejdias.rinhabackend2024q1.db.repository.ClientRepository
 import com.felipejdias.rinhabackend2024q1.db.repository.TransactionRepository
 import com.felipejdias.rinhabackend2024q1.domain.PaymentType
-import com.felipejdias.rinhabackend2024q1.exception.ClientLimitExceededException
+import com.felipejdias.rinhabackend2024q1.exception.ClientNotFoundException
+import com.felipejdias.rinhabackend2024q1.exception.InvalidParameterException
+import com.felipejdias.rinhabackend2024q1.exchange.TransactionRequest
 import com.felipejdias.rinhabackend2024q1.exchange.TransactionResponse
-import com.felipejdias.rinhabackend2024q1.service.ClientService
 import com.felipejdias.rinhabackend2024q1.service.TransactionService
-import org.springframework.beans.factory.annotation.Autowired
+import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 import java.time.Instant
-import java.util.*
 
 @Service
-class DefaultTransactionService: TransactionService {
-
-    @Autowired
-    private lateinit var clientService: ClientService
-
-    @Autowired
-    private lateinit var repository: TransactionRepository
+class DefaultTransactionService(
+    private val clientRepository: ClientRepository,
+    private val transactionRepository: TransactionRepository
+): TransactionService {
 
 
-    override fun create(context: Context): Context {
-        val client = clientService.findById(context.clientId)
 
-        val transaction = context.requestToEntity(client = client)
-        val clientUpdated = registerNewTransaction(client, transaction)
-
-        val response = TransactionResponse(limite = clientUpdated.limit, saldo = clientUpdated.balance)
-
-        return Context(request = context.request, clientId = context.clientId, response =  response)
+    @Transactional
+    override fun registerNewTransaction(context: Context): TransactionResponse {
+        val client = clientRepository.findClientAndLock(context.clientId).orElseThrow{ ClientNotFoundException()}
+        val transaction = createTransaction(client, context.request)
+        registerNewClientBalance(client, transaction)
+        transactionRepository.save(transaction)
+        return TransactionResponse(limite = client.limit, saldo = client.balance)
     }
 
-    override fun search(id: UUID): Optional<Transaction> {
-      return repository.findById(id)
+    private fun createTransaction(client: Client, transaction: TransactionRequest): Transaction {
+       return Transaction(
+            type = PaymentType.entries.find { it.value == transaction.type }!!,
+            amount = transaction.amount,
+            description = transaction.description,
+            client = client,
+            createdAt = Instant.now())
+
     }
 
-    override fun getAllTransactionsByClient(id: Long):  Optional<List<Transaction>> {
-       return repository.findTop10ByClientId(id)
-    }
-
-    private fun registerNewTransaction(client: Client, transaction: Transaction):Client {
-        val actualBalance = client.balance
-        val clientLimit = 0 - client.limit
-        if (transaction.type == PaymentType.DEBITO && actualBalance.minus(transaction.amount) < clientLimit ) {
-            throw  ClientLimitExceededException()
-        }else if(transaction.type == PaymentType.DEBITO){
-            client.balance = actualBalance.minus(transaction.amount)
-        }else if(transaction.type == PaymentType.CREDITO){
-            client.balance = actualBalance.plus(transaction.amount)
+    private fun registerNewClientBalance(client: Client, transaction: Transaction) {
+        return if (transaction.type.value.equals("c", ignoreCase = true)) {
+            client.credit(transaction.amount)
+        }else if (transaction.type.value.equals("d", ignoreCase = true)) {
+            client.debit(transaction.amount)
+        }else{
+            throw InvalidParameterException()
         }
 
-        repository.saveAndFlush(transaction.copy(createdAt = Instant.now()))
-        return clientService.createOrUpdateClient(client)
     }
 
-    override fun calculateNewClientBalance(client: Client): Long{
-        val transactionSummary  = repository.getTransactionSummariesByClientId( clientId = client.id)
-        val totalCredit = transactionSummary.filterKeys { it == "totalCredit" }.values.filterNotNull().sum()
-        val totalDebit = transactionSummary.filterKeys { it == "totalDebit" }.values.filterNotNull().sum()
-        return totalCredit - totalDebit
-
-    }
 }

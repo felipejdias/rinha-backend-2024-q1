@@ -1,23 +1,36 @@
 package com.felipejdias.rinhabackend2024q1.domain
 
-//TODO escrevi em portugues mas talvez o ideal seja
-// em ingles pra manter o padrão do projeto
-//TODO com a classe em ingles precisaria bolar um jeito de depois converter pra portugues
-// pois da forma que está ficará de acordo com o response descrito na rinha https://github.com/zanfranceschi/rinha-de-backend-2024-q1
-data class ExtratoBancario(
-    val saldo: Saldo,
-    val ultimas_transacoes: List<Transacao>
+import com.fasterxml.jackson.annotation.JsonProperty
+
+data class ClientStatement(
+    @JsonProperty("saldo")
+    val balance: Balance,
+
+    @JsonProperty("ultimas_transacoes")
+    val lastTransactions: List<Transaction>
 )
 
-data class Saldo(
+data class Balance(
+    @JsonProperty("total")
     val total: Long,
-    val data_extrato: String,
-    val limite: Long
+
+    @JsonProperty("data_extrato")
+    val statementDate: String,
+
+    @JsonProperty("limite")
+    val limit: Long
 )
 
-data class Transacao(
-    val valor: Long,
-    val tipo: String,
-    val descricao: String,
-    val realizado_em: String
+data class Transaction(
+    @JsonProperty("valor")
+    val amount: Long,
+
+    @JsonProperty("tipo")
+    val type: String,
+
+    @JsonProperty("descricao")
+    val description: String,
+
+    @JsonProperty("realizado_em")
+    val executedAt: String
 )

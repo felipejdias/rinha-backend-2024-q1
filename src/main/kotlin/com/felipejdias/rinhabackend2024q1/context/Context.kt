@@ -15,8 +15,8 @@ class Context(
 
     fun Context.requestToEntity(client: Client): Transaction =
          Transaction(
-             type = PaymentType.values().find { it.value == request.tipo }!!,
-             amount = this.request.valor,
-             description = this.request.descricao,
+             type = PaymentType.values().find { it.value == request.type }!!,
+             amount = this.request.amount,
+             description = this.request.description,
              client = client,
              createdAt = Instant.now())

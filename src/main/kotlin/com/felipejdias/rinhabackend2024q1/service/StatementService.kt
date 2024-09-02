@@ -1,8 +1,8 @@
 package com.felipejdias.rinhabackend2024q1.service
 
-import com.felipejdias.rinhabackend2024q1.domain.ExtratoBancario
+import com.felipejdias.rinhabackend2024q1.domain.ClientStatement
 
 interface StatementService {
 
-    fun getClientStatement(clientId: Long): ExtratoBancario
+    fun getClientStatement(clientId: Long): ClientStatement
 }
