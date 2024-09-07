@@ -31,14 +31,13 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-web")
 
-    //rabbitmq
-    implementation("com.rabbitmq:amqp-client")
-
     //postgress
     implementation("org.postgresql:postgresql")
 
     // https://mvnrepository.com/artifact/org.graalvm.nativeimage/svm
     compileOnly("org.graalvm.nativeimage:svm:24.0.2")
+
+    implementation("jakarta.validation:jakarta.validation-api:3.1.0")
 
 
 }

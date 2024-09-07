@@ -6,6 +6,7 @@ import com.felipejdias.rinhabackend2024q1.exchange.TransactionRequest
 import com.felipejdias.rinhabackend2024q1.exchange.TransactionResponse
 import com.felipejdias.rinhabackend2024q1.service.StatementService
 import com.felipejdias.rinhabackend2024q1.service.TransactionService
+import jakarta.validation.Valid
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -26,7 +27,7 @@ private val transactionService: TransactionService) {
     @PostMapping("/{clientId}/transacoes")
     fun createTransaction(
         @PathVariable("clientId") clientId: Long,
-        @RequestBody transaction: TransactionRequest
+        @Valid @RequestBody transaction: TransactionRequest
     ): TransactionResponse {
         return transactionService.registerNewTransaction(Context(clientId = clientId, request = transaction))
     }
