@@ -13,7 +13,7 @@ RUN gradle dependencies --no-daemon
 COPY . /usr/src/rinha-backend
 
 # Realizar o build da aplicação
-RUN gradle build --no-daemon
+RUN gradle build
 
 # Etapa de execução
 FROM container-registry.oracle.com/graalvm/native-image:21
