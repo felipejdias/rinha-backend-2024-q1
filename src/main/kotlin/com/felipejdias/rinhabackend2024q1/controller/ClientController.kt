@@ -62,6 +62,7 @@ private val transactionService: TransactionService) {
         if (transaction.amount <= 0)  { throw RequestValidationExceptions("amount must be greater than zero", field="amount") }
         if (transaction.description.isEmpty() || transaction.description.length > 10 ) { throw RequestValidationExceptions("description must be between 1 and 10 characters", field = "description") }
         if (!transaction.type.matches(Regex("^[cd]$"))) { throw  RequestValidationExceptions("type must be 'c' or 'd'", field="type") }
+        if ((transaction.amount % 1) != 0.0) { throw RequestValidationExceptions("amount must be an integer", field="amount") }
     }
 
 }

@@ -51,7 +51,7 @@ class DefaultTransactionService(
 
         return Transaction(
             type = PaymentType.entries.find { it.value == transaction.type }!!,
-            amount = transaction.amount!!,
+            amount = transaction.amount!!.toLong(),
             description = transaction.description!!,
             client = client,
             createdAt = Instant.now()
