@@ -9,7 +9,7 @@ Content-type:  application/json
 }
 
 ### consulta extrator
-GET http://{{hostname}}:{{port}}/clientes/1/extrato
+GET http://{{hostname}}:{{port}}/clientes/6/extrato
 Content-type:  application/json
 
 ### Consulta cliente

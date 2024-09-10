@@ -74,6 +74,17 @@ services:
     networks:
       - rede-backend
 
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: meu_pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=jaconis@domain.com
+      - PGADMIN_DEFAULT_PASSWORD=admin123
+    ports:
+      - "5050:80"
+    networks:
+      - rede-backend
+
 networks:
   rede-backend:
     driver: bridge
