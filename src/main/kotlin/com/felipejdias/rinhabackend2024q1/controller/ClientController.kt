@@ -56,14 +56,12 @@ private val transactionService: TransactionService) {
     }
 
     private fun validateTransaction(transaction: TransactionRequest) {
-        if (transaction.amount == null) { throw RequestValidationExceptions("amount must not be null") }
-        if (transaction.description == null) { throw RequestValidationExceptions("description must not be null") }
-        if (transaction.type == null) { throw RequestValidationExceptions("type must not be null") }
-        if (transaction.amount <= 0)  { throw RequestValidationExceptions("amount must be greater than zero") }
-        if (transaction.description.length < 1 || transaction.description.length > 10 ) { throw RequestValidationExceptions("description must be between 1 and 10 characters") }
-        if (!transaction.type.matches(Regex("^[cd]$"))) { throw  RequestValidationExceptions("type must be 'c' or 'd'") }
-        if (transaction.amount.mod(100) != 0) { throw RequestValidationExceptions("amount must be a long") }
-
+        if (transaction.amount == null) { throw RequestValidationExceptions("amount must not be null", field="amount") }
+        if (transaction.description == null) { throw RequestValidationExceptions("description must not be null", field="description") }
+        if (transaction.type == null) { throw RequestValidationExceptions("type must not be null",  field="type") }
+        if (transaction.amount <= 0)  { throw RequestValidationExceptions("amount must be greater than zero", field="amount") }
+        if (transaction.description.isEmpty() || transaction.description.length > 10 ) { throw RequestValidationExceptions("description must be between 1 and 10 characters", field = "description") }
+        if (!transaction.type.matches(Regex("^[cd]$"))) { throw  RequestValidationExceptions("type must be 'c' or 'd'", field="type") }
     }
 
 }
