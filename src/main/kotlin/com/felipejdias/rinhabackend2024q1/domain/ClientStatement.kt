@@ -7,7 +7,7 @@ data class ClientStatement(
     val balance: Balance,
 
     @JsonProperty("ultimas_transacoes")
-    val lastTransactions: List<Transaction>
+    val lastTransactionDTOS: List<TransactionDTO>
 )
 
 data class Balance(
@@ -21,7 +21,7 @@ data class Balance(
     val limit: Long
 )
 
-data class Transaction(
+data class TransactionDTO(
     @JsonProperty("valor")
     val amount: Long,
 
