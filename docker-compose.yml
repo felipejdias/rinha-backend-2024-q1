@@ -18,7 +18,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "0.65"
+          cpus: "0.4"
           memory: "220MB"
     networks:
       - rede-backend
@@ -69,26 +69,26 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "0.1"
+          cpus: "0.6"
           memory: "100MB"
     networks:
       - rede-backend
 
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: meu_pgadmin
-    environment:
-      - PGADMIN_DEFAULT_EMAIL=jaconis@domain.com
-      - PGADMIN_DEFAULT_PASSWORD=admin123
-    deploy:
-      resources:
-        limits:
-          cpus: "1.00"
-          memory: "500MB"
-    ports:
-      - "5050:80"
-    networks:
-      - rede-backend
+#  pgadmin:
+#    image: dpage/pgadmin4
+#    container_name: meu_pgadmin
+#    environment:
+#      - PGADMIN_DEFAULT_EMAIL=jaconis@domain.com
+#      - PGADMIN_DEFAULT_PASSWORD=admin123
+#    deploy:
+#      resources:
+#        limits:
+#          cpus: "1.00"
+#          memory: "500MB"
+#    ports:
+#      - "5050:80"
+#    networks:
+#      - rede-backend
 
 networks:
   rede-backend:

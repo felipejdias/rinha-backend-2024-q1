@@ -9,6 +9,6 @@ import java.util.*
 @Repository
 interface TransactionRepository: JpaRepository<Transaction, UUID> {
 
-    fun findTop10ByClientOrderByCreatedAtDesc(client: Client): List<Transaction>
+    fun findTop10ByClientOrderByCreatedAtDesc(client: Long): List<Transaction>
 
 }

@@ -3,13 +3,13 @@ POST http://{{hostname}}:{{port}}/clientes/1/transacoes
 Content-type:  application/json
 
 {
-  "valor": 101,
+  "valor": 99697,
   "tipo" : "d",
   "descricao" : "descricao"
 }
 
 ### consulta extrator
-GET http://{{hostname}}:{{port}}/clientes/6/extrato
+GET http://{{hostname}}:{{port}}/clientes/1/extrato
 Content-type:  application/json
 
 ### Consulta cliente

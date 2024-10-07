@@ -9,7 +9,7 @@ import kotlin.math.abs
 @Entity
 data class Client(
     @Id
-    @Column(name = "idt_client")
+    @Column(name = "id")
     val id: Long,
     val name: String,
     @Column(name = "credit_limit")

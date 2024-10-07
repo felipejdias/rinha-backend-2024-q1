@@ -6,24 +6,18 @@ import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
-import jakarta.persistence.FetchType
 import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
-import jakarta.persistence.JoinColumn
-import jakarta.persistence.ManyToOne
-import jakarta.persistence.SequenceGenerator
 import jakarta.persistence.Table
-import java.math.BigInteger
 import java.time.Instant
+import java.util.UUID
 
 @Entity
 @Table(name = "transactions")
 data class Transaction(
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "transaction_seq_generator")
-    @SequenceGenerator(name = "transaction_seq_generator", sequenceName = "transaction_id_sequence")
-    val id: BigInteger? = null,
+    @GeneratedValue
+    val id: UUID = UUID.randomUUID(),
 
     @Enumerated(EnumType.STRING)
     val type: PaymentType,
@@ -34,9 +28,8 @@ data class Transaction(
     @Column(nullable = false)
     val description: String,
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idt_client", nullable = false)
-    val client: Client,
+    @Column(name="id_client")
+    val client: Long,
 
     @Column(name = "created_at")
     val createdAt: Instant

@@ -22,7 +22,7 @@ class DefaultStatementService(private val transactionRepository: TransactionRepo
         val client = clientRepository.findById(clientId).orElseThrow{
             ClientNotFoundException()
         }
-        val transactions = transactionRepository.findTop10ByClientOrderByCreatedAtDesc(client)
+        val transactions = transactionRepository.findTop10ByClientOrderByCreatedAtDesc(client.id)
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
         val formattedDateTime = formatter.format( Instant.now().atZone(ZoneId.systemDefault()))
         val saldo = Balance(total = client.balance, statementDate = formattedDateTime, limit = client.limit)

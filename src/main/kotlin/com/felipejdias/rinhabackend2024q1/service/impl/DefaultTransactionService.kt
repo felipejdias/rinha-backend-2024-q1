@@ -23,9 +23,8 @@ class DefaultTransactionService(
 
     @Transactional
     override fun registerNewTransaction(context: Context): TransactionResponse {
-        val client = clientRepository.findClientAndLock(context.clientId).orElseThrow{
-            ClientNotFoundException()
-        }
+        val client = clientRepository.findClientAndLock(context.clientId)
+            .orElseThrow { ClientNotFoundException() }
         val transaction = createTransaction(client, context.request)
 
         registerNewClientBalance(client, transaction)
@@ -40,7 +39,7 @@ class DefaultTransactionService(
             type = PaymentType.entries.find { it.value == transaction.type }!!,
             amount = transaction.amount!!.toLong(),
             description = transaction.description!!,
-            client = client,
+            client = client.id,
             createdAt = Instant.now()
         )
     }
