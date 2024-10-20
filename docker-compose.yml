@@ -1,5 +1,4 @@
 services:
- #TODO após a imagem docker do projeto funcionando descomentar todo esse bloco de api para q o nginx funcioone
   api01: &api
     # Lembre-se de que seu serviço HTTP deve estar hospedado num repositório
     # publicamente acessível! Ex.: hub.docker.com
@@ -17,8 +16,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "0.525"
-          memory: "210MB"
+          cpus: "0.3"
+          memory: "110MB"
     networks:
       - rede-backend
 
@@ -67,8 +66,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "0.4"
-          memory: "120MB"
+          cpus: "0.6"
+          memory: "320MB"
     networks:
       - rede-backend
 
