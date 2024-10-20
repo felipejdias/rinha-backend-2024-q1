@@ -11,7 +11,7 @@ class DatabaseConnection {
             username = "admin"
             password = "123"
             driverClassName = "org.postgresql.Driver"
-            maximumPoolSize = 20
+            maximumPoolSize = 40
             idleTimeout = 30000
         }
 
