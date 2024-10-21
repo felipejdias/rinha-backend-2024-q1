@@ -3,13 +3,13 @@ POST http://{{hostname}}:{{port}}/clientes/2/transacoes
 Content-type:  application/json
 
 {
-  "valor": 1,
-  "tipo" : "d",
+  "valor": 1.0,
+  "tipo" : "c",
   "descricao" : "descricao"
 }
 
 ### consulta extrato
-GET http://{{hostname}}:{{port}}/clientes/4/extrato
+GET http://{{hostname}}:{{port}}/clientes/2/extrato
 Content-type:  application/json
 
 ### Consulta cliente

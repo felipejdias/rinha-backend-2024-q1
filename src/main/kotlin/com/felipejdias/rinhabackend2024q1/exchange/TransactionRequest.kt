@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty
 
 data class TransactionRequest(
     @JsonProperty("valor")
-    val valor: Long,
+    val amount: Double,
     @JsonProperty("tipo")
-    val tipo: String,
+    val type: String,
     @JsonProperty("descricao")
-    val descricao: String)
+    val description: String)

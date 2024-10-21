@@ -1,7 +1,6 @@
 package com.felipejdias.rinhabackend2024q1.db.connection
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
-import java.sql.Connection
 import java.sql.SQLException
 
 class DatabaseConnection {
@@ -11,21 +10,14 @@ class DatabaseConnection {
             username = "admin"
             password = "123"
             driverClassName = "org.postgresql.Driver"
-            maximumPoolSize = 20
-            idleTimeout = 30000
+            maximumPoolSize = 250
+            minimumIdle = 25
         }
 
         private val dataSource: HikariDataSource = HikariDataSource(hikariConfig)
 
         @Throws(SQLException::class)
-        fun getConnection(): Connection {
-            return dataSource.connection
-        }
+        fun getDataSource() = dataSource
 
-        fun close() {
-            if (!dataSource.isClosed) {
-                dataSource.close()
-            }
-        }
     }
 }
