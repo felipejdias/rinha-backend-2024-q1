@@ -23,7 +23,7 @@ class StatementRepository {
         var clientStatement = ClientStatement()
         var transactionsList = ArrayList<TransactionEntity>()
 
-        DatabaseConnection.getConnection().use { connection ->
+        DatabaseConnection.getDataSource().connection.use { connection ->
             preparedStatement = connection.prepareStatement(QUERY)
             preparedStatement.setLong(1, clientId)
 

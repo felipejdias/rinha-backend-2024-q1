@@ -11,7 +11,7 @@ class TransactionRepository {
     fun registerTransaction(idCliente: Long, transactionEntity: TransactionEntity): TransactionResponse {
         var transacaoResponse: TransactionResponse? = null
 
-        DatabaseConnection.getConnection().use { connection ->
+        DatabaseConnection.getDataSource().connection.use { connection ->
                 val procedureCall = "{call public.register_transaction(?, ?, ?, ?)}"
                 val callableStatement: CallableStatement = connection.prepareCall(procedureCall)
 
@@ -20,9 +20,9 @@ class TransactionRepository {
                 callableStatement.setLong(3, transactionEntity.amount)
                 callableStatement.setString(4, transactionEntity.description)
 
-                val resultSet: ResultSet = callableStatement.executeQuery()
-                if (resultSet.next()) {
-                    transacaoResponse = TransactionResponse(resultSet.getLong("limiteRetorno"),resultSet.getLong("saldoRetorno"))
+                val result: ResultSet = callableStatement.executeQuery()
+                if (result.next()) {
+                    transacaoResponse = TransactionResponse(result.getLong("limiteRetorno"),result.getLong("saldoRetorno"))
                 }
             }
         return transacaoResponse!!

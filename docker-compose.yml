@@ -11,8 +11,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "0.3"
-          memory: "110MB"
+          cpus: "1.5"
+          memory: "70MB"
     networks:
       - rede-backend
 
@@ -55,11 +55,10 @@ services:
       - "5432:5432"
     volumes:
       - ./scripts/script.sql:/docker-entrypoint-initdb.d/script.sql
-    command: "postgres -c synchronous_commit=0 -c full_page_writes=0"
     deploy:
       resources:
         limits:
-          cpus: "0.6"
+          cpus: "2.0"
           memory: "320MB"
     networks:
       - rede-backend
